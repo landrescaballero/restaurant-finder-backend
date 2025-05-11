@@ -65,7 +65,7 @@ Si prefieres ejecutar la API usando Docker, puedes utilizar Docker Compose. Aseg
    docker-compose up
    ```
 
-   El servicio estará disponible en `http://localhost:3000`, dependiendo del puerto indicado por la variable de entorno.
+   El servicio estará disponible en `http://localhost:{PORT}`, dependiendo del puerto indicado por la variable de entorno.
    Es importante tener en cuenta que se debe crear el archivo `.env` en el root del proyecto, para cargar las variables de entorno al contenedor.
 
 ## Endpoints
