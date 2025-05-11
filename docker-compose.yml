@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:17
+    container_name: restaurant-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+
+  nest-app:
+    build: .
+    container_name: restaurant-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      PORT: ${PORT}
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      MAP_API_KEY: ${MAP_API_KEY}
+      MAP_URL_COORDINATES: ${MAP_URL_COORDINATES}
+      MAP_URL_CITY: ${MAP_URL_CITY}
+      MAP_FIELD_MASK: ${MAP_FIELD_MASK}
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+    external: true
